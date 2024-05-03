@@ -22,8 +22,8 @@ def render_goal(goal):
 
 
 @app.route("/profiles/<teacher_id>")
-def render_teacher(teacher):
-    return f"3десь будет преподаватель {teacher}"
+def render_teacher(teacher_id):
+    return f"3десь будет преподаватель {teacher_id}"
 
 
 @app.route("/request")
@@ -37,8 +37,9 @@ def render_request_done():
 
 
 @app.route("/booking/<teacher_id>/<dow>/<time>")
-def render_booking(teacher_id):
-    return f"3десь будет форма бронирования {teacher_id}"
+def render_booking(teacher_id, dow, time):
+    return (f"3десь будет форма бронирования учителя {teacher_id} "
+            f"на {dow} в {time}")
 
 
 @app.route("/booking_done")
