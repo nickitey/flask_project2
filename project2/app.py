@@ -1,4 +1,6 @@
 import json
+from datetime import datetime
+
 
 from flask import Flask, render_template, request
 from flask_wtf import FlaskForm
@@ -78,9 +80,11 @@ def render_booking_done():
             "orderID": None,
             "name": client_name,
             "day": client_day,
-            "time": client_time,
+            "client_time": client_time,
             "phone": client_phone,
             "teacherID": client_teacher,
+            'order_date': datetime.now().strftime("%d-%m-%Y"),
+            'order_time': datetime.now().strftime("%H:%M:%S")
         }
     ]
     update_json_database("booking.json", order, order_key="orderID")
