@@ -52,12 +52,29 @@ def render_teacher(teacher_id):
 
 @app.route("/request")
 def render_request():
-    return "3десь будет заявка на подбор"
+    return render_template('request.html')
 
 
-@app.route("/request_done/")
+@app.route("/request_done", methods=['POST'])
 def render_request_done():
-    return "3аявка на подбор отправлена"
+    client_name = request.form['clientName']
+    client_phone = request.form['clientPhone']
+    time = request.form['time']
+    goal = request.form['goal']
+    goal_to_template = target[goal]
+    teacher_request = [{
+        'request_id': None,
+        'name': client_name,
+        'phone': client_phone,
+        'goal': goal,
+        'time': time,
+        'order_date': datetime.now().strftime("%d-%m-%Y"),
+        'order_time': datetime.now().strftime("%H:%M:%S")
+    }]
+    update_json_database("request.json", teacher_request, order_key="request_id")
+    return render_template('request_done.html', clientName=client_name,
+                           clientPhone=client_phone, time=time,
+                           goal=goal_to_template)
 
 
 @app.route("/booking/<teacher_id>/<dow>/<time>")
