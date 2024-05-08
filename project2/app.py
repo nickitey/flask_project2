@@ -1,9 +1,14 @@
 import json
 from datetime import datetime
 
+from create_db import create_json_db
 from flask import Flask, render_template, request
 from tools import update_json_database
 
+# Создаем нашу json-database из мок-данных в data.py
+create_json_db()
+
+# Читаем нашу json-database и получаем из нее данные
 with open(r"database.json", "r") as db:
     content = json.load(db)
 
@@ -49,29 +54,35 @@ def render_teacher(teacher_id):
 
 @app.route("/request")
 def render_request():
-    return render_template('request.html')
+    return render_template("request.html")
 
 
-@app.route("/request_done", methods=['POST'])
+@app.route("/request_done", methods=["POST"])
 def render_request_done():
-    client_name = request.form['clientName']
-    client_phone = request.form['clientPhone']
-    time = request.form['time']
-    goal = request.form['goal']
+    client_name = request.form["clientName"]
+    client_phone = request.form["clientPhone"]
+    time = request.form["time"]
+    goal = request.form["goal"]
     goal_to_template = target[goal]
-    teacher_request = [{
-        'request_id': None,
-        'name': client_name,
-        'phone': client_phone,
-        'goal': goal,
-        'time': time,
-        'order_date': datetime.now().strftime("%d-%m-%Y"),
-        'order_time': datetime.now().strftime("%H:%M:%S")
-    }]
+    teacher_request = [
+        {
+            "request_id": None,
+            "name": client_name,
+            "phone": client_phone,
+            "goal": goal,
+            "time": time,
+            "order_date": datetime.now().strftime("%d-%m-%Y"),
+            "order_time": datetime.now().strftime("%H:%M:%S"),
+        }
+    ]
     update_json_database("request.json", teacher_request, order_key="request_id")
-    return render_template('request_done.html', clientName=client_name,
-                           clientPhone=client_phone, time=time,
-                           goal=goal_to_template)
+    return render_template(
+        "request_done.html",
+        clientName=client_name,
+        clientPhone=client_phone,
+        time=time,
+        goal=goal_to_template,
+    )
 
 
 @app.route("/booking/<teacher_id>/<dow>/<time>")
@@ -97,8 +108,8 @@ def render_booking_done():
             "client_time": client_time,
             "phone": client_phone,
             "teacherID": client_teacher,
-            'order_date': datetime.now().strftime("%d-%m-%Y"),
-            'order_time': datetime.now().strftime("%H:%M:%S")
+            "order_date": datetime.now().strftime("%d-%m-%Y"),
+            "order_time": datetime.now().strftime("%H:%M:%S"),
         }
     ]
     update_json_database("booking.json", order, order_key="orderID")
