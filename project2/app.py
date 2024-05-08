@@ -42,7 +42,8 @@ def render_teachers():
 
 @app.route("/goals/<goal>")
 def render_goal(goal):
-    return f"3десь будет цель {goal}"
+    return render_template('goal.html', target=target, goal=goal,
+                           teachers=teachers)
 
 
 @app.route("/profiles/<teacher_id>")
