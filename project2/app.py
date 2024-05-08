@@ -5,10 +5,11 @@ from create_db import create_json_db
 from flask import Flask, render_template, request
 from tools import update_json_database
 
-# Создаем нашу json-database из представленного mock-файла data.py
+
+# Создаем нашу json-database из мок-данных в data.py
 create_json_db()
 
-# Откроем нашу json-database и прочтем ее
+# Читаем нашу json-database и получаем из нее данные
 with open(r"database.json", "r") as db:
     content = json.load(db)
 
