@@ -1,5 +1,6 @@
 import json
 from datetime import datetime
+import random
 
 from create_db import create_json_db
 from flask import Flask, render_template, request
@@ -32,7 +33,11 @@ app.secret_key = "abcdefu"
 
 @app.route("/")
 def render_main():
-    return render_template("index.html")
+    teacher_ids = set()
+    while len(teacher_ids) < 6:
+        teacher_ids.add(random.randint(0, len(teachers) - 1))
+    return render_template("index.html", teacher_ids=teacher_ids,
+                           teachers=teachers)
 
 
 @app.route("/all")
