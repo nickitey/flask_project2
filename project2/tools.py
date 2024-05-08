@@ -4,7 +4,10 @@ import json
 def update_json_database(database_name, data_to_fill, need_number=True, order_key=None):
     try:
         database_start = open(database_name, "r")
-        database_content = json.loads(database_start.read())
+        try:
+            database_content = json.loads(database_start.read())
+        except json.decoder.JSONDecodeError:
+            database_content = []
         database_full = database_content + data_to_fill
         database_start.close()
         if need_number:
