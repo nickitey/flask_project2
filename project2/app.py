@@ -1,11 +1,8 @@
 import json
 from datetime import datetime
 
-
 from flask import Flask, render_template, request
-from flask_wtf import FlaskForm
-from tools import update_json_database, update_order_number
-from wtforms import BooleanField, PasswordField, SelectField, StringField
+from tools import update_json_database
 
 with open(r"database.json", "r") as db:
     content = json.load(db)
