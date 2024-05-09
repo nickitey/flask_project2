@@ -33,7 +33,9 @@ app.secret_key = "abcdefu"
 @app.route("/")
 def render_main():
     teacher_ids = get_list_of_random_ids(6, teachers)
-    return render_template("index.html", teacher_ids=teacher_ids, teachers=teachers)
+    return render_template(
+        "index.html", teacher_ids=teacher_ids, teachers=teachers
+    )
 
 
 @app.route("/all", methods=["GET", "POST"])
@@ -77,7 +79,9 @@ def render_teachers():
 
 @app.route("/goals/<goal>")
 def render_goal(goal):
-    return render_template("goal.html", target=target, goal=goal, teachers=teachers)
+    return render_template(
+        "goal.html", target=target, goal=goal, teachers=teachers
+    )
 
 
 @app.route("/profiles/<teacher_id>")
@@ -112,7 +116,9 @@ def render_request_done():
             "order_time": datetime.now().strftime("%H:%M:%S"),
         }
     ]
-    update_json_database("request.json", teacher_request, order_key="request_id")
+    update_json_database(
+        "request.json", teacher_request, order_key="request_id"
+    )
     return render_template(
         "request_done.html",
         clientName=client_name,

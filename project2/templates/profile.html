@@ -2,46 +2,46 @@
 
 {% block container %}
 
-  <main class="container mt-3">
-    <div class="card my-4 mx-auto">
-      <div class="card-body m-2 m-md-4">
-        <article class="row">
-          <div class="col-5"><img src="{{ teacher['picture'] }}" class="img-fluid" alt="{{ teacher['name'] }}"></div>
-          <div class="col-7">
+<main class="container mt-3">
+  <div class="card my-4 mx-auto">
+    <div class="card-body m-2 m-md-4">
+      <article class="row">
+        <div class="col-5"><img src="{{ teacher['picture'] }}" class="img-fluid" alt="{{ teacher['name'] }}"></div>
+        <div class="col-7">
 
-            <section class="teacher=info">
+          <section class="teacher=info">
 
-              <h1 class="h2">{{ teacher['name'] }}</h1>
-              <p><span class="badge badge-secondary mr-2">Для путешествий </span>Рейтинг: {{ teacher['rating'] }}
-                Ставка: {{ teacher['price'] }} / час</p>
-              <p>{{ teacher['about'] }}</p>
+            <h1 class="h2">{{ teacher['name'] }}</h1>
+            <p><span class="badge badge-secondary mr-2">Для путешествий </span>Рейтинг: {{ teacher['rating'] }}
+              Ставка: {{ teacher['price'] }} / час</p>
+            <p>{{ teacher['about'] }}</p>
 
-            </section>
+          </section>
 
-            <section class="available">
-              <h4 class="mb-4 mt-5">Записаться на пробный урок</h4>
-                {% for date in teacher['free'] %}
-                  <h6 class="mt-4">{{ week[date] }} </h6>
-                  {% set ns = namespace(free_timeslot = 0) %}
-                  {% for time in teacher['free'][date] %}
+          <section class="available">
+            <h4 class="mb-4 mt-5">Записаться на пробный урок</h4>
+            {% for date in teacher['free'] %}
+            <h6 class="mt-4">{{ week[date] }} </h6>
+            {% set ns = namespace(free_timeslot = 0) %}
+            {% for time in teacher['free'][date] %}
 
-                    {% if teacher['free'][date][time] == True %}
-                        {% set ns.free_timeslot = 1 %}
-                      <a href="/booking/{{ teacher['id'] }}/{{ date }}/{{ time }}"
-                         class="btn btn-outline-success mr-2">{{ time }} свободно</a>
-                    {% endif %}
-                  {% endfor %}
+            {% if teacher['free'][date][time] == True %}
+            {% set ns.free_timeslot = 1 %}
+            <a href="/booking/{{ teacher['id'] }}/{{ date }}/{{ time }}" class="btn btn-outline-success mr-2">{{ time }}
+              свободно</a>
+            {% endif %}
+            {% endfor %}
 
-                  {% if ns.free_timeslot == 0 %}
-                    {{ 'Нет свободных уроков' }}
-                  {% endif %}
-                {% endfor %}
-            </section>
+            {% if ns.free_timeslot == 0 %}
+            {{ 'Нет свободных уроков' }}
+            {% endif %}
+            {% endfor %}
+          </section>
 
-          </div>
-        </article>
-      </div>
-
+        </div>
+      </article>
     </div>
-  </main>
+
+  </div>
+</main>
 {% endblock %}
