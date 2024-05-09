@@ -6,37 +6,22 @@
     <form action="{{ url_for('render_request_done') }}" class="card mb-5" method="POST">
       <div class="card-body text-center pt-5">
         <h1 class="h3 card-title mt-4 mb-2">Подбор преподавателя</h1>
-        <p class="px-5">Напишите, чего вам нужно и&nbsp;мы&nbsp;подберем отличных&nbsp;ребят</p>
+        <p class="px-5">Напишите, чего вам нужно, и&nbsp;мы&nbsp;подберем отличных&nbsp;ребят</p>
       </div>
       <hr>
       <div class="card-body mx-3">
         <div class="row">
           <div class="col">
             <p>Какая цель занятий?</p>
-            <div class="form-check ">
-              <input type="radio" class="form-check-input" name="goal" value="travel" id="goal1" checked>
-              <label class="form-check-label" for="goal1">
-                Для путешествий
-              </label>
-            </div>
-            <div class="form-check ">
-              <input type="radio" class="form-check-input" name="goal" value="study" id="goal2">
-              <label class="form-check-label" for="goal2">
-                Для школы
-              </label>
-            </div>
-            <div class="form-check ">
-              <input type="radio" class="form-check-input" name="goal" value="work" id="goal3">
-              <label class="form-check-label" for="goal3">
-                Для работы
-              </label>
-            </div>
-            <div class="form-check ">
-              <input type="radio" class="form-check-input" name="goal" value="relocate" id="goal4">
-              <label class="form-check-label" for="goal4">
-                Для переезда
-              </label>
-            </div>
+            {% for goal in enumerated %}
+              <div class="form-check ">
+                <input type="radio" class="form-check-input" name="goal" value="{{ goal[1] }}" id="goal{{ goal[0] }}"
+                       {% if goal[0] == 1 %} checked {% endif %}>
+                <label class="form-check-label" for="goal{{ goal[0] }}">
+                  {{ target[goal[1]] }}
+                </label>
+              </div>
+            {% endfor %}
           </div>
           <div class="col">
             <p>Сколько времени есть?</p>
