@@ -62,3 +62,7 @@ def test_request():
         assert database_content[-1]['name'] == 'Senior Pomidor'
         assert database_content[-1]['phone'] == '8-800-555-35-35'
     print('Test # 4 passed.')
+
+
+def test_goal_page():
+    url = "http://127.0.0.1:8000/goals/"

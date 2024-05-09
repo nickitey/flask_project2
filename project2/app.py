@@ -42,7 +42,7 @@ def render_main():
     )
 
 
-@app.route("/all", methods=["GET", "POST"])
+@app.route("/all/", methods=["GET", "POST"])
 def render_teachers():
     if request.method == "GET":
         teachers_id = get_list_of_random_ids(len(teachers), teachers)
@@ -81,7 +81,7 @@ def render_teachers():
         )
 
 
-@app.route("/goals/<goal>")
+@app.route("/goals/<goal>/")
 def render_goal(goal):
     return render_template(
         "goal.html",
@@ -92,7 +92,7 @@ def render_goal(goal):
     )
 
 
-@app.route("/profiles/<teacher_id>")
+@app.route("/profiles/<teacher_id>/")
 def render_teacher(teacher_id):
     try:
         teacher = teachers[int(teacher_id)]
@@ -103,7 +103,7 @@ def render_teacher(teacher_id):
         return render_template("404.html")
 
 
-@app.route("/request")
+@app.route("/request/")
 def render_request():
     enumerated_goals = list(enumerate(target, 1))
     return render_template(
@@ -111,7 +111,7 @@ def render_request():
     )
 
 
-@app.route("/request_done", methods=["POST"])
+@app.route("/request_done/", methods=["POST"])
 def render_request_done():
     client_name = request.form["clientName"]
     client_phone = request.form["clientPhone"]
@@ -141,7 +141,7 @@ def render_request_done():
     )
 
 
-@app.route("/booking/<teacher_id>/<dow>/<time>")
+@app.route("/booking/<teacher_id>/<dow>/<time>/")
 def render_booking(teacher_id, dow, time):
     teacher = teachers[int(teacher_id)]
     return render_template(
@@ -149,7 +149,7 @@ def render_booking(teacher_id, dow, time):
     )
 
 
-@app.route("/booking_done", methods=["POST"])
+@app.route("/booking_done/", methods=["POST"])
 def render_booking_done():
     client_name = request.form["clientName"]
     client_day = request.form["clientWeekday"]
