@@ -57,7 +57,8 @@
         <label class="mb-1 mt-2">Вас зовут</label>
         <input class="form-control" type="text" name='clientName' placeholder="">
         <label class="mb-1 mt-2">Ваш телефон</label>
-        <input class="form-control" type="text" name='clientPhone' placeholder="">
+        <input class="form-control" type="text" name='clientPhone' placeholder=""
+               pattern="^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$">
         <input type="submit" class="btn btn-primary mt-4 mb-2" value="Найдите мне преподавателя">
       </div>
     </form>
