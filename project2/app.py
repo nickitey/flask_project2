@@ -1,11 +1,10 @@
 import json
 from datetime import datetime
-import random
+
+from flask import Flask, render_template, request
 
 from create_db import create_json_db
-from flask import Flask, render_template, request
-from tools import update_json_database
-
+from tools import get_list_of_random_ids, update_json_database
 
 # Создаем нашу json-database из мок-данных в data.py
 create_json_db()
@@ -33,22 +32,52 @@ app.secret_key = "abcdefu"
 
 @app.route("/")
 def render_main():
-    teacher_ids = set()
-    while len(teacher_ids) < 6:
-        teacher_ids.add(random.randint(0, len(teachers) - 1))
-    return render_template("index.html", teacher_ids=teacher_ids,
-                           teachers=teachers)
+    teacher_ids = get_list_of_random_ids(6, teachers)
+    return render_template("index.html", teacher_ids=teacher_ids, teachers=teachers)
 
 
-@app.route("/all")
+@app.route("/all", methods=["GET", "POST"])
 def render_teachers():
-    return "3десь будут преподаватели"
+    if request.method == "GET":
+        teachers_id = get_list_of_random_ids(len(teachers), teachers)
+        selected_value = "4"
+        return render_template(
+            "all.html",
+            teachers=teachers,
+            teachers_id=teachers_id,
+            selected_value=selected_value,
+        )
+    else:
+        select_value = request.form["filter"]
+        if select_value == "4":
+            teachers_id = get_list_of_random_ids(len(teachers), teachers)
+            sort_filter = None
+            reverse_status = None
+        elif select_value == "3":
+            teachers_id = None
+            sort_filter = "rating"
+            reverse_status = True
+        elif select_value == "2":
+            teachers_id = None
+            sort_filter = "price"
+            reverse_status = False
+        else:
+            teachers_id = None
+            sort_filter = "price"
+            reverse_status = True
+        return render_template(
+            "all.html",
+            teachers=teachers,
+            teachers_id=teachers_id,
+            sort_filter=sort_filter,
+            reverse_status=reverse_status,
+            select_value=select_value,
+        )
 
 
 @app.route("/goals/<goal>")
 def render_goal(goal):
-    return render_template('goal.html', target=target, goal=goal,
-                           teachers=teachers)
+    return render_template("goal.html", target=target, goal=goal, teachers=teachers)
 
 
 @app.route("/profiles/<teacher_id>")
@@ -133,7 +162,7 @@ def render_booking_done():
 
 @app.errorhandler(500)
 def render_server_error(error):
-    return f"Что-то не так, но мы все починим, честное слово.", 505
+    return "Что-то не так, но мы все починим, честное слово.", 500
 
 
 @app.errorhandler(404)

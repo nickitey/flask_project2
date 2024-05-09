@@ -1,4 +1,5 @@
 import json
+import random
 
 
 def update_json_database(database_name, data_to_fill, need_number=True, order_key=None):
@@ -28,3 +29,14 @@ def update_order_number(data, key):
     else:
         data[0][key] = 1
     return data
+
+
+def get_list_of_random_ids(target_length, max_length_obj):
+    unique_ids = set()
+    target_ids = list()
+    while len(target_ids) < target_length:
+        new_id = random.randint(0, len(max_length_obj) - 1)
+        if new_id not in unique_ids:
+            target_ids.append(new_id)
+            unique_ids.add(new_id)
+    return target_ids
