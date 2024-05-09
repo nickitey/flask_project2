@@ -34,7 +34,11 @@ app.secret_key = "abcdefu"
 def render_main():
     teacher_ids = get_list_of_random_ids(6, teachers)
     return render_template(
-        "index.html", teacher_ids=teacher_ids, teachers=teachers, goals_emoji=emojis, goals=target
+        "index.html",
+        teacher_ids=teacher_ids,
+        teachers=teachers,
+        goals_emoji=emojis,
+        goals=target,
     )
 
 
@@ -80,7 +84,11 @@ def render_teachers():
 @app.route("/goals/<goal>")
 def render_goal(goal):
     return render_template(
-        "goal.html", target=target, goal=goal, teachers=teachers, goals_emoji=emojis
+        "goal.html",
+        target=target,
+        goal=goal,
+        teachers=teachers,
+        goals_emoji=emojis,
     )
 
 
@@ -88,7 +96,9 @@ def render_goal(goal):
 def render_teacher(teacher_id):
     try:
         teacher = teachers[int(teacher_id)]
-        return render_template("profile.html", teacher=teacher, week=week, goals=target)
+        return render_template(
+            "profile.html", teacher=teacher, week=week, goals=target
+        )
     except IndexError:
         return render_template("404.html")
 
@@ -96,7 +106,9 @@ def render_teacher(teacher_id):
 @app.route("/request")
 def render_request():
     enumerated_goals = list(enumerate(target, 1))
-    return render_template("request.html", enumerated=enumerated_goals, target=target)
+    return render_template(
+        "request.html", enumerated=enumerated_goals, target=target
+    )
 
 
 @app.route("/request_done", methods=["POST"])

@@ -2,7 +2,9 @@ import json
 import random
 
 
-def update_json_database(database_name, data_to_fill, need_number=True, order_key=None):
+def update_json_database(
+    database_name, data_to_fill, need_number=True, order_key=None
+):
     try:
         database_start = open(database_name, "r")
         try:
@@ -18,7 +20,9 @@ def update_json_database(database_name, data_to_fill, need_number=True, order_ke
         database_finish.close()
     except IOError:
         database_new = open(database_name, "w")
-        database_new.write(json.dumps(update_order_number(data_to_fill, order_key)))
+        database_new.write(
+            json.dumps(update_order_number(data_to_fill, order_key))
+        )
         database_new.close()
     print(f"{database_name} is updated.")
 
