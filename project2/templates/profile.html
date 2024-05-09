@@ -32,7 +32,7 @@
 
             {% if teacher['free'][date][time] == True %}
             {% set ns.free_timeslot = 1 %}
-            <a href="/booking/{{ teacher['id'] }}/{{ date }}/{{ time }}" class="btn btn-outline-success mr-2">{{ time }}
+            <a href="/booking/{{ teacher['id'] }}/{{ date }}/{{ time }}/" class="btn btn-outline-success mr-2">{{ time }}
               свободно</a>
             {% endif %}
             {% endfor %}
